@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import Home from './Home'
+import Admin from './Admin'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      currentPage: 0
+    }
+  }
+
+  goToAdminPage = () => {
+    this.setState({
+      currentPage: 1,
+      startTrain: true
+    })
+  }
+
+  backToHomePage = () => {
+    this.setState({
+      currentPage: 0
+    })
+  }
+
+  callBack = () => {
+    this.setState({
+      startTrain: false
+    })
+    console.log("start train: ", this.state.startTrain);
+  }
+
+  render() {
+    if (this.state.currentPage === 1) {
+      return (
+        <Admin startTrain={this.state.startTrain} back={this.backToHomePage} callBack={this.callBack}/>
+      )
+    }
+
+    return (
+      <Home onClick={this.goToAdminPage}/>
+    )
+  }
 }
-
-export default App;
